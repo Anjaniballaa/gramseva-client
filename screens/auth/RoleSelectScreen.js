@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import {
+  View, Text, TouchableOpacity,
+  StyleSheet, ScrollView
+} from 'react-native';
 import { useLanguage } from '../../context/LanguageContext';
+import { useTheme } from '../../context/ThemeContext';
 
 export default function RoleSelectScreen({ navigation }) {
   const { t } = useLanguage();
+  const { colors, isDark } = useTheme();
   const [selected, setSelected] = useState(null);
 
   const roles = [
@@ -12,32 +17,32 @@ export default function RoleSelectScreen({ navigation }) {
       emoji: '🧑‍🌾',
       label: t('farmer'),
       desc: t('farmer_desc'),
-      color: '#2e7d32',
-      bg: '#e8f5e9'
+      color: colors.farmer,
+      bg: colors.farmerLight
     },
     {
       code: 'villager',
       emoji: '👨‍👩‍👧',
-      label: t('villager'),
+      label: t('resident'),
       desc: t('villager_desc'),
-      color: '#1565c0',
-      bg: '#e3f2fd'
+      color: colors.resident,
+      bg: colors.residentLight
     },
     {
       code: 'gramsevak',
-      emoji: '👨‍⚕️',
-      label: t('gramsevak'),
+      emoji: '👨‍💼',
+      label: t('field_officer'),
       desc: t('gramsevak_desc'),
-      color: '#bf360c',
-      bg: '#fff3e0'
+      color: colors.fieldOfficer,
+      bg: colors.fieldOfficerLight
     },
     {
       code: 'doctor',
       emoji: '🩺',
       label: t('doctor'),
       desc: t('doctor_desc'),
-      color: '#6a1b9a',
-      bg: '#f3e5f5'
+      color: colors.doctor,
+      bg: colors.doctorLight
     },
   ];
 
@@ -45,35 +50,52 @@ export default function RoleSelectScreen({ navigation }) {
 
   return (
     <ScrollView
-      style={styles.container}
+      style={[styles.container, { backgroundColor: colors.background }]}
       contentContainerStyle={styles.content}
     >
-      <Text style={styles.title}>{t('select_role')}</Text>
-      <Text style={styles.subtitle}>{t('choose_role')}</Text>
+      <Text style={[styles.title, { color: colors.farmer }]}>
+        🌾 {t('app_name')}
+      </Text>
+      <Text style={[styles.sectionTitle, { color: colors.text }]}>
+        {t('select_role')}
+      </Text>
+      <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
+        {t('choose_role')}
+      </Text>
 
       {roles.map(role => (
         <TouchableOpacity
           key={role.code}
           style={[
             styles.card,
-            selected === role.code && {
-              borderColor: role.color,
-              backgroundColor: role.bg
-            }
+            {
+              backgroundColor: colors.surface,
+              borderColor: selected === role.code ? role.color : colors.border
+            },
+            selected === role.code && { backgroundColor: role.bg }
           ]}
           onPress={() => setSelected(role.code)}
           activeOpacity={0.8}
         >
-          <View style={[styles.emojiContainer,
-            selected === role.code && { backgroundColor: role.color }]}>
+          <View style={[
+            styles.emojiContainer,
+            {
+              backgroundColor: selected === role.code
+                ? role.color : colors.surfaceSecondary
+            }
+          ]}>
             <Text style={styles.emoji}>{role.emoji}</Text>
           </View>
           <View style={styles.roleInfo}>
-            <Text style={[styles.roleLabel,
-              selected === role.code && { color: role.color }]}>
+            <Text style={[
+              styles.roleLabel,
+              { color: selected === role.code ? role.color : colors.text }
+            ]}>
               {role.label}
             </Text>
-            <Text style={styles.roleDesc}>{role.desc}</Text>
+            <Text style={[styles.roleDesc, { color: colors.textSecondary }]}>
+              {role.desc}
+            </Text>
           </View>
           {selected === role.code && (
             <Text style={[styles.checkmark, { color: role.color }]}>✓</Text>
@@ -86,14 +108,19 @@ export default function RoleSelectScreen({ navigation }) {
           style={[
             styles.button,
             styles.loginBtn,
-            !selected && styles.disabledBtn,
-            selected && { borderColor: selectedRole?.color }
+            {
+              borderColor: selectedRole?.color || colors.border,
+              backgroundColor: colors.surface
+            },
+            !selected && { borderColor: colors.border }
           ]}
-          onPress={() => navigation.navigate('Login', { role: selected })}
+          onPress={() => selected && navigation.navigate('Login', { role: selected })}
           disabled={!selected}
         >
-          <Text style={[styles.loginBtnText,
-            selected && { color: selectedRole?.color }]}>
+          <Text style={[
+            styles.loginBtnText,
+            { color: selectedRole?.color || colors.textMuted }
+          ]}>
             {t('login')}
           </Text>
         </TouchableOpacity>
@@ -101,10 +128,11 @@ export default function RoleSelectScreen({ navigation }) {
         <TouchableOpacity
           style={[
             styles.button,
-            !selected && styles.disabledBtn,
-            selected && { backgroundColor: selectedRole?.color }
+            {
+              backgroundColor: selectedRole?.color || colors.border
+            }
           ]}
-          onPress={() => navigation.navigate('Register', { role: selected })}
+          onPress={() => selected && navigation.navigate('Register', { role: selected })}
           disabled={!selected}
         >
           <Text style={styles.buttonText}>{t('register')}</Text>
@@ -112,8 +140,8 @@ export default function RoleSelectScreen({ navigation }) {
       </View>
 
       {selected && (
-        <Text style={styles.selectedHint}>
-          {selectedRole?.emoji} {selectedRole?.label}
+        <Text style={[styles.selectedHint, { color: colors.textMuted }]}>
+          {selectedRole?.emoji} {selectedRole?.label} {t('selected') || 'selected'}
         </Text>
       )}
     </ScrollView>
@@ -121,46 +149,42 @@ export default function RoleSelectScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f1f8e9' },
-  content: { padding: 24, justifyContent: 'center', minHeight: '100%' },
+  container: { flex: 1 },
+  content: { padding: 24, minHeight: '100%' },
   title: {
     fontSize: 28, fontWeight: 'bold',
-    color: '#2e7d32', textAlign: 'center', marginBottom: 8
+    textAlign: 'center', marginBottom: 4, marginTop: 40
+  },
+  sectionTitle: {
+    fontSize: 22, fontWeight: 'bold',
+    textAlign: 'center', marginBottom: 8, marginTop: 8
   },
   subtitle: {
-    fontSize: 16, color: '#666',
-    textAlign: 'center', marginBottom: 32
+    fontSize: 15, textAlign: 'center', marginBottom: 24
   },
   card: {
-    backgroundColor: 'white', borderRadius: 16,
-    padding: 16, marginBottom: 12,
-    flexDirection: 'row', alignItems: 'center',
-    borderWidth: 2, borderColor: '#e0e0e0', elevation: 3
+    borderRadius: 16, padding: 16,
+    marginBottom: 12, flexDirection: 'row',
+    alignItems: 'center', borderWidth: 2, elevation: 2
   },
   emojiContainer: {
     width: 56, height: 56, borderRadius: 28,
-    backgroundColor: '#f5f5f5', alignItems: 'center',
-    justifyContent: 'center', marginRight: 14
+    alignItems: 'center', justifyContent: 'center', marginRight: 14
   },
   emoji: { fontSize: 28 },
   roleInfo: { flex: 1 },
-  roleLabel: { fontSize: 17, fontWeight: 'bold', color: '#333' },
-  roleDesc: { fontSize: 13, color: '#888', marginTop: 4 },
+  roleLabel: { fontSize: 17, fontWeight: 'bold' },
+  roleDesc: { fontSize: 13, marginTop: 4 },
   checkmark: { fontSize: 22, fontWeight: 'bold', marginLeft: 8 },
   row: { flexDirection: 'row', gap: 12, marginTop: 16 },
   button: {
-    flex: 1, backgroundColor: '#2e7d32',
-    borderRadius: 12, padding: 18, alignItems: 'center'
+    flex: 1, borderRadius: 12,
+    padding: 18, alignItems: 'center'
   },
-  loginBtn: {
-    backgroundColor: 'white',
-    borderWidth: 2, borderColor: '#2e7d32'
-  },
-  disabledBtn: { backgroundColor: '#ccc', borderColor: '#ccc' },
+  loginBtn: { borderWidth: 2 },
   buttonText: { color: 'white', fontSize: 18, fontWeight: 'bold' },
-  loginBtnText: { color: '#2e7d32', fontSize: 18, fontWeight: 'bold' },
+  loginBtnText: { fontSize: 18, fontWeight: 'bold' },
   selectedHint: {
-    textAlign: 'center', color: '#666',
-    fontSize: 14, marginTop: 12
+    textAlign: 'center', fontSize: 14, marginTop: 12
   }
 });
