@@ -1,10 +1,11 @@
 {
   "expo": {
-    "name": "GramSeva",
-    "slug": "gramseva",
-    "version": "1.0.0",
+    "name": "RuralMate",
+    "slug": "ruralmate",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/splash.png",
       "backgroundColor": "#2e7d32",
@@ -15,13 +16,53 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#2e7d32"
       },
-      "package": "com.gramseva.app"
+      "package": "com.ruralmate.app",
+      "versionCode": 2,
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.RECEIVE_BOOT_COMPLETED",
+        "android.permission.VIBRATE",
+        "android.permission.USE_FINGERPRINT"
+      ]
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ruralmate.app"
     },
     "plugins": [
-      "expo-sharing"
+      "expo-sharing",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#2e7d32",
+          "sounds": [],
+          "androidMode": "default",
+          "androidCollapsedTitle": "RuralMate"
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "RuralMate needs location to show nearby health centers and village-specific information."
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "RuralMate needs camera access to scan crop diseases."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "RuralMate needs photo access to scan crop diseases."
+        }
+      ]
     ],
     "extra": {
       "eas": {
