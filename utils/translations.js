@@ -1,5 +1,10 @@
 export const translations = {
   en: {
+    // App
+    app_name: 'RuralMate',
+    app_tagline: 'Your Village Companion',
+    app_tagline_sub: 'ग्राम सहायक • గ్రామ సహాయకుడు',
+
     // Common
     namaste: 'Namaste 🙏',
     home: 'Home',
@@ -22,6 +27,17 @@ export const translations = {
     weather: 'Weather',
     reports: 'Reports',
     alerts: 'Alerts',
+    confirm: 'Confirm',
+    edit: 'Edit',
+    view: 'View',
+    close: 'Close',
+    search: 'Search',
+    filter: 'Filter',
+    all: 'All',
+    none: 'None',
+    yes: 'Yes',
+    no: 'No',
+    ok: 'OK',
 
     // Auth
     welcome_back: 'Welcome Back',
@@ -40,16 +56,30 @@ export const translations = {
     village: 'Village',
     detecting_location: 'Detecting location...',
     already_account: 'Already have an account? Login',
+    confirm_pin: 'Confirm PIN',
+    reenter_pin: 'Re-enter your PIN',
+    employee_id: 'Employee ID',
+    employee_id_optional: 'Employee ID (optional)',
 
-    // Farmer
+    // Roles — Updated names
     farmer: 'Farmer',
     farmer_desc: 'Scan crops, get weather & farm advice',
-    scan_crop: 'Scan Crop',
-    crop_history: 'Crop History',
+    villager: 'Resident',
+    villager_desc: 'Health check, consult doctors',
+    gramsevak: 'Field Officer',
+    gramsevak_desc: 'Monitor village health & crops',
+    doctor: 'Doctor',
+    doctor_desc: 'Manage appointments & prescriptions',
+    healthworker: 'Health Worker',
+    field_officer: 'Field Officer',
+    resident: 'Resident',
+
+    // Crop Scan — Updated
+    scan_crop: 'Crop Scanner',
+    crop_history: 'Scan History',
     last_scan: 'Last Crop Scan',
     no_scans: 'No scans yet',
     scan_now: 'Scan Now →',
-    select_crop: 'Select Your Crop',
     analyze_crop: '🔍 Analyze Crop',
     analyzing: 'Analyzing...',
     ai_treatment: '💊 AI Treatment Advice',
@@ -59,18 +89,38 @@ export const translations = {
     share_community: '📢 Share to Community',
     shared_community: '✅ Shared to Community!',
     disease: 'Disease:',
-    confidence: 'Confidence:',
-    severity: 'Severity:',
-    wrong_crop: '⚠️ Wrong Crop Selected!',
+    confidence: 'Confidence',
+    severity: 'Severity',
+    crop_identified: 'Crop Identified',
+    not_crop_image: 'Not a crop image',
+    wrong_image_message: 'Please upload a clear photo of your crop or plant leaves.',
+    scan_again: 'Scan Another Crop',
+    change_photo: 'Change Photo',
+    camera: 'Camera',
+    gallery: 'Gallery',
+    take_photo: 'Take Photo',
+    choose_photo: 'Choose Photo',
+    how_to_scan: 'How to scan',
+    take_clear_photo: 'Take a clear photo of your crop leaves or plant',
+    ensure_good_light: 'Make sure there is good lighting',
+    get_instant_results: 'Get instant disease detection and treatment advice',
+    scan_tip: 'Tip: Focus on affected leaves for best results. You can scan any crop!',
+    ai_powered: 'AI powered disease detection',
+    consult_officer: 'Consult Agricultural Officer',
+    consult_reason_default: 'This disease may require professional guidance. Contact your local Krishi Vigyan Kendra (KVK).',
+    preventive_care: 'Preventive Care Tips',
+    healthy: 'Healthy',
+    select_image_first: 'Please select an image first',
+    scan_failed: 'Scan failed. Please try again.',
+    analysis_wait: 'This may take 15-30 seconds',
     agricultural_helplines: '🆘 Agricultural Helplines',
+    field_officer_only: 'Field Officer Only',
 
-    // Villager
-    villager: 'Villager',
-    villager_desc: 'Health check, consult doctors',
+    // Health
     check_symptoms: 'Check Symptoms',
     health_cards: 'Health Cards',
     health_history: 'Health History',
-    med_reminders: 'Med Reminders',
+    med_reminders: 'Medicine Reminders',
     nearby_centers: 'Nearby Centers',
     daily_health_tips: '💡 Daily Health Tips',
     emergency_numbers: '🚨 Emergency Numbers',
@@ -104,9 +154,7 @@ export const translations = {
     appointments: 'Appointments',
     doctors: 'Doctors',
 
-    // Gram Sevak
-    gramsevak: 'Gram Sevak',
-    gramsevak_desc: 'Monitor village health & crops',
+    // Field Officer (GramSevak)
     village_reports: 'Village Reports',
     epidemic_alerts: 'Epidemic Alerts',
     village_health_summary: '📊 Village Health Summary',
@@ -115,14 +163,12 @@ export const translations = {
     mild: '🟢 Mild',
     crop_reports: '🌾 Crop',
     recent_health_cases: '🏥 Recent Health Cases',
-    no_cases: 'No health cases yet',
+    no_cases: 'No cases yet',
     epidemic_alert: '🚨 EPIDEMIC ALERT!',
     report_phc: 'Report to PHC immediately!',
     quick_actions: 'Quick Actions',
 
     // Doctor
-    doctor: 'Doctor',
-    doctor_desc: 'Manage appointments & prescriptions',
     pending: 'Pending',
     confirmed: 'Confirmed',
     completed: 'Completed',
@@ -138,6 +184,9 @@ export const translations = {
     follow_up: 'Follow-up Date',
     send_prescription: '📤 Send Prescription to Patient',
     patient_history: '📋 Patient History',
+    available: '✅ Available',
+    unavailable: '❌ Unavailable',
+    availability: 'Availability',
 
     // Weather
     todays_weather: "Today's Weather",
@@ -161,10 +210,10 @@ export const translations = {
     reply: 'Reply',
     send_advice: 'Send Advice',
     public: 'Public',
-    gramsevak_only: 'Gram Sevak Only',
+    gramsevak_only: 'Field Officer Only',
     who_can_see: 'Who can see this post?',
     everyone_village: 'Everyone in your village can see this post',
-    only_gramsevak: 'Only Gram Sevak and Doctor can see this post',
+    only_gramsevak: 'Only Field Officer and Doctor can see this post',
 
     // Nearby
     nearby_health_centers: '🏥 Nearby Health Centers',
@@ -213,9 +262,27 @@ export const translations = {
     built_for: '🛠️ Built for',
     rural_india: 'Rural India 🇮🇳',
     about: 'About',
+    appearance: 'Appearance',
+    dark_mode: 'Dark Mode',
+    light_mode: 'Light Mode',
+    system_default: 'System Default',
+    theme: 'Theme',
+    try_again: 'Try Again',
+
+    // Notifications
+    notifications: 'Notifications',
+    notification_appointment: 'Appointment Update',
+    notification_prescription: 'Prescription Ready',
+    notification_community: 'Community Post',
+    notification_epidemic: 'Epidemic Alert',
   },
 
   te: {
+    // App
+    app_name: 'RuralMate',
+    app_tagline: 'మీ గ్రామ సహాయకుడు',
+    app_tagline_sub: 'Your Village Companion',
+
     // Common
     namaste: 'నమస్కారం 🙏',
     home: 'హోమ్',
@@ -238,6 +305,14 @@ export const translations = {
     weather: 'వాతావరణం',
     reports: 'నివేదికలు',
     alerts: 'హెచ్చరికలు',
+    confirm: 'నిర్ధారించు',
+    edit: 'సవరించు',
+    view: 'చూడు',
+    close: 'మూసివేయి',
+    search: 'వెతుకు',
+    yes: 'అవును',
+    no: 'కాదు',
+    ok: 'సరే',
 
     // Auth
     welcome_back: 'స్వాగతం',
@@ -256,16 +331,27 @@ export const translations = {
     village: 'గ్రామం',
     detecting_location: 'స్థానం గుర్తిస్తోంది...',
     already_account: 'ఇప్పటికే ఖాతా ఉందా? లాగిన్ చేయండి',
+    confirm_pin: 'PIN నిర్ధారించు',
+    reenter_pin: 'మీ PIN మళ్ళీ నమోదు చేయండి',
 
-    // Farmer
+    // Roles
     farmer: 'రైతు',
     farmer_desc: 'పంటలు స్కాన్ చేయండి, వాతావరణం & వ్యవసాయ సలహా పొందండి',
-    scan_crop: 'పంట స్కాన్',
-    crop_history: 'పంట చరిత్ర',
+    villager: 'నివాసితుడు',
+    villager_desc: 'ఆరోగ్య తనిఖీ, వైద్యులను సంప్రదించు',
+    gramsevak: 'ఫీల్డ్ ఆఫీసర్',
+    gramsevak_desc: 'గ్రామ ఆరోగ్యం & పంటలను పర్యవేక్షించు',
+    doctor: 'వైద్యుడు',
+    doctor_desc: 'అపాయింట్మెంట్లు & ప్రిస్క్రిప్షన్లు నిర్వహించు',
+    field_officer: 'ఫీల్డ్ ఆఫీసర్',
+    resident: 'నివాసితుడు',
+
+    // Crop Scan
+    scan_crop: 'పంట స్కానర్',
+    crop_history: 'స్కాన్ చరిత్ర',
     last_scan: 'చివరి పంట స్కాన్',
-    no_scans: 'ఇంకా స్కాన్ లు లేవు',
+    no_scans: 'ఇంకా స్కాన్లు లేవు',
     scan_now: 'ఇప్పుడు స్కాన్ చేయి →',
-    select_crop: 'మీ పంటను ఎంచుకోండి',
     analyze_crop: '🔍 పంటను విశ్లేషించు',
     analyzing: 'విశ్లేషిస్తోంది...',
     ai_treatment: '💊 AI చికిత్స సలహా',
@@ -275,14 +361,30 @@ export const translations = {
     share_community: '📢 సమాజంతో షేర్ చేయి',
     shared_community: '✅ సమాజంతో షేర్ చేయబడింది!',
     disease: 'వ్యాధి:',
-    confidence: 'నమ్మకం:',
-    severity: 'తీవ్రత:',
-    wrong_crop: '⚠️ తప్పు పంట ఎంచుకున్నారు!',
+    confidence: 'నమ్మకం',
+    severity: 'తీవ్రత',
+    crop_identified: 'పంట గుర్తించబడింది',
+    scan_again: 'మళ్ళీ స్కాన్ చేయి',
+    change_photo: 'ఫోటో మార్చు',
+    camera: 'కెమెరా',
+    gallery: 'గ్యాలరీ',
+    take_photo: 'ఫోటో తీయి',
+    choose_photo: 'ఫోటో ఎంచుకో',
+    how_to_scan: 'ఎలా స్కాన్ చేయాలి',
+    take_clear_photo: 'మీ పంట ఆకులు లేదా మొక్క యొక్క స్పష్టమైన ఫోటో తీయండి',
+    ensure_good_light: 'మంచి వెలుతురు ఉందని నిర్ధారించుకోండి',
+    get_instant_results: 'తక్షణ వ్యాధి గుర్తింపు మరియు చికిత్స సలహా పొందండి',
+    scan_tip: 'చిట్కా: ఉత్తమ ఫలితాల కోసం ప్రభావిత ఆకులపై దృష్టి పెట్టండి!',
+    ai_powered: 'AI ఆధారిత వ్యాధి గుర్తింపు',
+    consult_officer: 'వ్యవసాయ అధికారిని సంప్రదించండి',
+    preventive_care: 'నివారణ సంరక్షణ చిట్కాలు',
+    healthy: 'ఆరోగ్యంగా ఉంది',
+    select_image_first: 'దయచేసి ముందు చిత్రాన్ని ఎంచుకోండి',
+    analysis_wait: 'ఇది 15-30 సెకన్లు పట్టవచ్చు',
     agricultural_helplines: '🆘 వ్యవసాయ హెల్ప్ లైన్లు',
+    field_officer_only: 'ఫీల్డ్ ఆఫీసర్ మాత్రమే',
 
-    // Villager
-    villager: 'గ్రామస్తుడు',
-    villager_desc: 'ఆరోగ్య తనిఖీ, వైద్యులను సంప్రదించు',
+    // Health
     check_symptoms: 'లక్షణాలు తనిఖీ చేయి',
     health_cards: 'ఆరోగ్య కార్డులు',
     health_history: 'ఆరోగ్య చరిత్ర',
@@ -320,9 +422,7 @@ export const translations = {
     appointments: 'అపాయింట్మెంట్లు',
     doctors: 'వైద్యులు',
 
-    // Gram Sevak
-    gramsevak: 'గ్రామ సేవక్',
-    gramsevak_desc: 'గ్రామ ఆరోగ్యం & పంటలను పర్యవేక్షించు',
+    // Field Officer
     village_reports: 'గ్రామ నివేదికలు',
     epidemic_alerts: 'అంటువ్యాధి హెచ్చరికలు',
     village_health_summary: '📊 గ్రామ ఆరోగ్య సారాంశం',
@@ -331,14 +431,12 @@ export const translations = {
     mild: '🟢 తేలికైన',
     crop_reports: '🌾 పంట',
     recent_health_cases: '🏥 ఇటీవలి ఆరోగ్య కేసులు',
-    no_cases: 'ఇంకా ఆరోగ్య కేసులు లేవు',
+    no_cases: 'ఇంకా కేసులు లేవు',
     epidemic_alert: '🚨 అంటువ్యాధి హెచ్చరిక!',
     report_phc: 'వెంటనే PHC కి నివేదించండి!',
     quick_actions: 'త్వరిత చర్యలు',
 
     // Doctor
-    doctor: 'వైద్యుడు',
-    doctor_desc: 'అపాయింట్మెంట్లు & ప్రిస్క్రిప్షన్లు నిర్వహించు',
     pending: 'పెండింగ్',
     confirmed: 'నిర్ధారించబడింది',
     completed: 'పూర్తయింది',
@@ -354,6 +452,8 @@ export const translations = {
     follow_up: 'ఫాలో-అప్ తేదీ',
     send_prescription: '📤 రోగికి ప్రిస్క్రిప్షన్ పంపు',
     patient_history: '📋 రోగి చరిత్ర',
+    available: '✅ అందుబాటులో ఉన్నారు',
+    unavailable: '❌ అందుబాటులో లేరు',
 
     // Weather
     todays_weather: 'నేటి వాతావరణం',
@@ -371,16 +471,16 @@ export const translations = {
 
     // Community
     community_feed: '👥 సమాజ ఫీడ్',
-    no_posts: 'ఇంకా పోస్ట్ లు లేవు. మొదటిగా పోస్ట్ చేయండి!',
+    no_posts: 'ఇంకా పోస్ట్లు లేవు. మొదటిగా పోస్ట్ చేయండి!',
     post_advisory: '📢 సలహా పోస్ట్ చేయి',
     post: 'పోస్ట్',
     reply: 'రిప్లై',
     send_advice: 'సలహా పంపు',
     public: 'అందరికి',
-    gramsevak_only: 'గ్రామ సేవక్ మాత్రమే',
+    gramsevak_only: 'ఫీల్డ్ ఆఫీసర్ మాత్రమే',
     who_can_see: 'ఈ పోస్ట్ ను ఎవరు చూడవచ్చు?',
     everyone_village: 'మీ గ్రామంలో అందరూ ఈ పోస్ట్ చూడవచ్చు',
-    only_gramsevak: 'గ్రామ సేవక్ మరియు వైద్యుడు మాత్రమే ఈ పోస్ట్ చూడవచ్చు',
+    only_gramsevak: 'ఫీల్డ్ ఆఫీసర్ మరియు వైద్యుడు మాత్రమే చూడవచ్చు',
 
     // Nearby
     nearby_health_centers: '🏥 సమీప ఆరోగ్య కేంద్రాలు',
@@ -429,9 +529,19 @@ export const translations = {
     built_for: '🛠️ నిర్మించబడింది',
     rural_india: 'గ్రామీణ భారతదేశం 🇮🇳',
     about: 'గురించి',
+    dark_mode: 'డార్క్ మోడ్',
+    light_mode: 'లైట్ మోడ్',
+    system_default: 'సిస్టమ్ డిఫాల్ట్',
+    theme: 'థీమ్',
+    try_again: 'మళ్ళీ ప్రయత్నించు',
   },
 
   hi: {
+    // App
+    app_name: 'RuralMate',
+    app_tagline: 'आपका गाँव साथी',
+    app_tagline_sub: 'Your Village Companion',
+
     // Common
     namaste: 'नमस्ते 🙏',
     home: 'होम',
@@ -454,6 +564,14 @@ export const translations = {
     weather: 'मौसम',
     reports: 'रिपोर्ट',
     alerts: 'अलर्ट',
+    confirm: 'पुष्टि करें',
+    edit: 'संपादित करें',
+    view: 'देखें',
+    close: 'बंद करें',
+    search: 'खोजें',
+    yes: 'हाँ',
+    no: 'नहीं',
+    ok: 'ठीक है',
 
     // Auth
     welcome_back: 'वापसी पर स्वागत',
@@ -472,16 +590,27 @@ export const translations = {
     village: 'गाँव',
     detecting_location: 'स्थान पता लगाया जा रहा है...',
     already_account: 'पहले से खाता है? लॉगिन करें',
+    confirm_pin: 'PIN की पुष्टि करें',
+    reenter_pin: 'अपना PIN दोबारा दर्ज करें',
 
-    // Farmer
+    // Roles
     farmer: 'किसान',
     farmer_desc: 'फसल स्कैन करें, मौसम और खेती सलाह पाएं',
-    scan_crop: 'फसल स्कैन',
-    crop_history: 'फसल इतिहास',
+    villager: 'निवासी',
+    villager_desc: 'स्वास्थ्य जांच, डॉक्टर से परामर्श',
+    gramsevak: 'फील्ड ऑफिसर',
+    gramsevak_desc: 'गांव के स्वास्थ्य और फसलों की निगरानी',
+    doctor: 'डॉक्टर',
+    doctor_desc: 'अपॉइंटमेंट और नुस्खे प्रबंधित करें',
+    field_officer: 'फील्ड ऑफिसर',
+    resident: 'निवासी',
+
+    // Crop Scan
+    scan_crop: 'फसल स्कैनर',
+    crop_history: 'स्कैन इतिहास',
     last_scan: 'अंतिम फसल स्कैन',
     no_scans: 'अभी तक कोई स्कैन नहीं',
     scan_now: 'अभी स्कैन करें →',
-    select_crop: 'अपनी फसल चुनें',
     analyze_crop: '🔍 फसल का विश्लेषण करें',
     analyzing: 'विश्लेषण हो रहा है...',
     ai_treatment: '💊 AI उपचार सलाह',
@@ -491,14 +620,30 @@ export const translations = {
     share_community: '📢 समुदाय में शेयर करें',
     shared_community: '✅ समुदाय में शेयर किया!',
     disease: 'रोग:',
-    confidence: 'विश्वास:',
-    severity: 'गंभीरता:',
-    wrong_crop: '⚠️ गलत फसल चुनी!',
+    confidence: 'विश्वास',
+    severity: 'गंभीरता',
+    crop_identified: 'फसल पहचानी गई',
+    scan_again: 'दूसरी फसल स्कैन करें',
+    change_photo: 'फोटो बदलें',
+    camera: 'कैमरा',
+    gallery: 'गैलरी',
+    take_photo: 'फोटो लें',
+    choose_photo: 'फोटो चुनें',
+    how_to_scan: 'कैसे स्कैन करें',
+    take_clear_photo: 'अपनी फसल की पत्तियों की स्पष्ट फोटो लें',
+    ensure_good_light: 'अच्छी रोशनी सुनिश्चित करें',
+    get_instant_results: 'तुरंत रोग पहचान और उपचार सलाह पाएं',
+    scan_tip: 'सुझाव: सर्वोत्तम परिणामों के लिए प्रभावित पत्तियों पर ध्यान दें!',
+    ai_powered: 'AI आधारित रोग पहचान',
+    consult_officer: 'कृषि अधिकारी से परामर्श करें',
+    preventive_care: 'निवारक देखभाल सुझाव',
+    healthy: 'स्वस्थ',
+    select_image_first: 'कृपया पहले एक छवि चुनें',
+    analysis_wait: 'इसमें 15-30 सेकंड लग सकते हैं',
     agricultural_helplines: '🆘 कृषि हेल्पलाइन',
+    field_officer_only: 'केवल फील्ड ऑफिसर',
 
-    // Villager
-    villager: 'ग्रामीण',
-    villager_desc: 'स्वास्थ्य जांच, डॉक्टर से परामर्श',
+    // Health
     check_symptoms: 'लक्षण जांचें',
     health_cards: 'स्वास्थ्य कार्ड',
     health_history: 'स्वास्थ्य इतिहास',
@@ -536,9 +681,7 @@ export const translations = {
     appointments: 'अपॉइंटमेंट',
     doctors: 'डॉक्टर',
 
-    // Gram Sevak
-    gramsevak: 'ग्राम सेवक',
-    gramsevak_desc: 'गांव के स्वास्थ्य और फसलों की निगरानी',
+    // Field Officer
     village_reports: 'ग्राम रिपोर्ट',
     epidemic_alerts: 'महामारी चेतावनी',
     village_health_summary: '📊 ग्राम स्वास्थ्य सारांश',
@@ -547,14 +690,12 @@ export const translations = {
     mild: '🟢 हल्का',
     crop_reports: '🌾 फसल',
     recent_health_cases: '🏥 हाल के स्वास्थ्य मामले',
-    no_cases: 'अभी तक कोई स्वास्थ्य मामले नहीं',
+    no_cases: 'अभी तक कोई मामले नहीं',
     epidemic_alert: '🚨 महामारी चेतावनी!',
     report_phc: 'तुरंत PHC को सूचित करें!',
     quick_actions: 'त्वरित कार्रवाई',
 
     // Doctor
-    doctor: 'डॉक्टर',
-    doctor_desc: 'अपॉइंटमेंट और नुस्खे प्रबंधित करें',
     pending: 'लंबित',
     confirmed: 'पुष्टि',
     completed: 'पूर्ण',
@@ -570,6 +711,8 @@ export const translations = {
     follow_up: 'फॉलो-अप तारीख',
     send_prescription: '📤 मरीज को नुस्खा भेजें',
     patient_history: '📋 मरीज इतिहास',
+    available: '✅ उपलब्ध',
+    unavailable: '❌ अनुपलब्ध',
 
     // Weather
     todays_weather: 'आज का मौसम',
@@ -593,10 +736,10 @@ export const translations = {
     reply: 'जवाब',
     send_advice: 'सलाह भेजें',
     public: 'सार्वजनिक',
-    gramsevak_only: 'केवल ग्राम सेवक',
+    gramsevak_only: 'केवल फील्ड ऑफिसर',
     who_can_see: 'यह पोस्ट कौन देख सकता है?',
     everyone_village: 'आपके गांव में सभी यह पोस्ट देख सकते हैं',
-    only_gramsevak: 'केवल ग्राम सेवक और डॉक्टर यह पोस्ट देख सकते हैं',
+    only_gramsevak: 'केवल फील्ड ऑफिसर और डॉक्टर देख सकते हैं',
 
     // Nearby
     nearby_health_centers: '🏥 पास के स्वास्थ्य केंद्र',
@@ -645,6 +788,11 @@ export const translations = {
     built_for: '🛠️ के लिए बनाया',
     rural_india: 'ग्रामीण भारत 🇮🇳',
     about: 'के बारे में',
+    dark_mode: 'डार्क मोड',
+    light_mode: 'लाइट मोड',
+    system_default: 'सिस्टम डिफ़ॉल्ट',
+    theme: 'थीम',
+    try_again: 'फिर कोशिश करें',
   }
 };
 
