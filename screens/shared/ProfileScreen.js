@@ -1,27 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  View, Text, StyleSheet, TouchableOpacity,
-  Alert, ScrollView
+  View, Text, StyleSheet, ScrollView,
+  TouchableOpacity, Alert, Switch
 } from 'react-native';
-import { getLiveLocation } from '../../utils/location';
 import { useAuth } from '../../context/AuthContext';
 import { useLanguage } from '../../context/LanguageContext';
-
-const ROLE_COLORS = {
-  farmer: { primary: '#2e7d32', light: '#e8f5e9', badge: '#1b5e20' },
-  villager: { primary: '#1565c0', light: '#e3f2fd', badge: '#0d47a1' },
-  gramsevak: { primary: '#b71c1c', light: '#ffebee', badge: '#7f0000' },
-  healthworker: { primary: '#b71c1c', light: '#ffebee', badge: '#7f0000' },
-  doctor: { primary: '#6a1b9a', light: '#f3e5f5', badge: '#4a148c' },
-};
+import { useTheme } from '../../context/ThemeContext';
+import { getLiveLocation } from '../../utils/location';
 
 export default function ProfileScreen() {
-  const { user, logout, liveVillage } = useAuth();
-  const { t } = useLanguage();
+  const { user, logout, liveVillage, updateUser } = useAuth();
+  const { t, language, changeLanguage } = useLanguage();
+  const { isDark, themeMode, setTheme, colors } = useTheme();
+
   const [liveLocation, setLiveLocation] = useState(null);
   const [coords, setCoords] = useState(null);
 
-  const roleColor = ROLE_COLORS[user?.role] || ROLE_COLORS.villager;
+  const getRoleColor = () => {
+    if (user?.role === 'farmer') return colors.farmer;
+    if (user?.role === 'villager') return colors.resident;
+    if (user?.role === 'gramsevak') return colors.fieldOfficer;
+    if (user?.role === 'doctor') return colors.doctor;
+    return colors.farmer;
+  };
+
+  const roleColor = getRoleColor();
 
   useEffect(() => {
     detectLocation();
@@ -44,7 +47,6 @@ export default function ProfileScreen() {
         setLiveLocation(liveVillage);
       }
     } catch (error) {
-      console.log('Location error:', error.message);
       if (liveVillage) setLiveLocation(liveVillage);
     }
   };
@@ -65,110 +67,191 @@ export default function ProfileScreen() {
   };
 
   const getRoleEmoji = (role) => {
-    if (role === 'farmer') return '🧑‍🌾';
-    if (role === 'villager') return '👨‍👩‍👧';
-    if (role === 'gramsevak') return '👨‍⚕️';
-    if (role === 'healthworker') return '👩‍⚕️';
-    if (role === 'doctor') return '🩺';
-    return '👤';
+    const emojis = {
+      farmer: '🧑‍🌾',
+      villager: '👨‍👩‍👧',
+      gramsevak: '👨‍💼',
+      doctor: '🩺'
+    };
+    return emojis[role] || '👤';
   };
 
   const getRoleLabel = (role) => {
-    if (role === 'farmer') return t('farmer').toUpperCase();
-    if (role === 'villager') return t('villager').toUpperCase();
-    if (role === 'gramsevak') return t('gramsevak').toUpperCase();
-    if (role === 'healthworker') return 'HEALTH WORKER';
-    if (role === 'doctor') return t('doctor').toUpperCase();
-    return 'USER';
+    const labels = {
+      farmer: t('farmer'),
+      villager: t('resident'),
+      gramsevak: t('field_officer'),
+      doctor: t('doctor')
+    };
+    return (labels[role] || role).toUpperCase();
   };
 
-  const currentLocation = liveLocation || liveVillage || user?.village || t('detecting_location');
+  const currentLocation = liveLocation || liveVillage
+    || user?.village || t('detecting_location');
+
+  const themeOptions = [
+    { id: 'light', label: t('light_mode'), emoji: '☀️' },
+    { id: 'dark', label: t('dark_mode'), emoji: '🌙' },
+    { id: 'system', label: t('system_default'), emoji: '📱' },
+  ];
+
+  const languageOptions = [
+    { code: 'en', label: 'English', emoji: '🇬🇧' },
+    { code: 'te', label: 'తెలుగు', emoji: '🇮🇳' },
+    { code: 'hi', label: 'हिंदी', emoji: '🇮🇳' },
+  ];
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: roleColor.light }]}>
-      <View style={[styles.header, { backgroundColor: roleColor.primary }]}>
+    <ScrollView
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
+      {/* Header */}
+      <View style={[styles.header, { backgroundColor: roleColor }]}>
         <Text style={styles.avatar}>{getRoleEmoji(user?.role)}</Text>
         <Text style={styles.name}>{user?.name}</Text>
         <Text style={styles.role}>{getRoleLabel(user?.role)}</Text>
-        <View style={[styles.villageBadge, { backgroundColor: roleColor.badge }]}>
+        <View style={[styles.villageBadge,
+          { backgroundColor: 'rgba(0,0,0,0.2)' }]}>
           <Text style={styles.villageText}>📍 {currentLocation}</Text>
         </View>
       </View>
 
+      {/* My Details */}
       <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: roleColor.primary }]}>
+        <Text style={[styles.sectionTitle, { color: roleColor }]}>
           {t('my_details')}
         </Text>
 
-        <View style={styles.infoCard}>
-          <Text style={styles.infoLabel}>📱 {t('phone')}</Text>
-          <Text style={styles.infoValue}>{user?.phone}</Text>
-        </View>
-
-        <View style={styles.infoCard}>
-          <Text style={styles.infoLabel}>🌍 {t('language')}</Text>
-          <Text style={styles.infoValue}>{user?.language?.toUpperCase()}</Text>
-        </View>
-
-        <View style={styles.infoCard}>
-          <Text style={styles.infoLabel}>📍 {t('live_location')}</Text>
-          <Text style={[styles.infoValue, { color: roleColor.primary }]}>
-            {currentLocation}
-          </Text>
-        </View>
-
-        {coords && (
-          <View style={styles.infoCard}>
-            <Text style={styles.infoLabel}>🌐 {t('coordinates')}</Text>
-            <Text style={styles.infoValue}>{coords.lat}, {coords.lon}</Text>
+        {[
+          { label: t('phone'), value: user?.phone },
+          { label: t('village'), value: currentLocation },
+          { label: t('language'), value: language?.toUpperCase() },
+          coords ? {
+            label: t('coordinates'),
+            value: `${coords.lat}, ${coords.lon}`
+          } : null,
+          user?.role === 'farmer' && user?.landSize ? {
+            label: t('land_size'),
+            value: user.landSize
+          } : null,
+          user?.role === 'doctor' && user?.specialization ? {
+            label: t('specialization'),
+            value: user.specialization
+          } : null,
+          user?.role === 'doctor' && user?.qualification ? {
+            label: t('qualification'),
+            value: user.qualification
+          } : null,
+          user?.role === 'doctor' && user?.hospitalName ? {
+            label: t('hospital'),
+            value: user.hospitalName
+          } : null,
+        ].filter(Boolean).map((item, i) => (
+          <View key={i} style={[styles.infoCard, {
+            backgroundColor: colors.surface,
+            borderColor: colors.border
+          }]}>
+            <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>
+              {item.label}
+            </Text>
+            <Text style={[styles.infoValue, { color: colors.text }]}>
+              {item.value}
+            </Text>
           </View>
-        )}
-
-        {user?.role === 'farmer' && user?.landSize && (
-          <View style={styles.infoCard}>
-            <Text style={styles.infoLabel}>🌾 {t('land_size')}</Text>
-            <Text style={styles.infoValue}>{user?.landSize}</Text>
-          </View>
-        )}
-
-        {user?.role === 'doctor' && (
-          <>
-            {user?.specialization && (
-              <View style={styles.infoCard}>
-                <Text style={styles.infoLabel}>🩺 {t('specialization')}</Text>
-                <Text style={styles.infoValue}>{user?.specialization}</Text>
-              </View>
-            )}
-            {user?.qualification && (
-              <View style={styles.infoCard}>
-                <Text style={styles.infoLabel}>🎓 {t('qualification')}</Text>
-                <Text style={styles.infoValue}>{user?.qualification}</Text>
-              </View>
-            )}
-            {user?.hospitalName && (
-              <View style={styles.infoCard}>
-                <Text style={styles.infoLabel}>🏥 {t('hospital')}</Text>
-                <Text style={styles.infoValue}>{user?.hospitalName}</Text>
-              </View>
-            )}
-          </>
-        )}
+        ))}
       </View>
 
+      {/* Language Settings */}
       <View style={styles.section}>
-        <Text style={[styles.sectionTitle, { color: roleColor.primary }]}>{t('about')}</Text>
-        <View style={styles.infoCard}>
-          <Text style={styles.infoLabel}>📱 {t('app_version')}</Text>
-          <Text style={styles.infoValue}>GramSeva v1.0</Text>
-        </View>
-        <View style={styles.infoCard}>
-          <Text style={styles.infoLabel}>🛠️ {t('built_for')}</Text>
-          <Text style={styles.infoValue}>{t('rural_india')} 🇮🇳</Text>
+        <Text style={[styles.sectionTitle, { color: roleColor }]}>
+          🌍 {t('language')}
+        </Text>
+        <View style={[styles.optionCard, { backgroundColor: colors.surface }]}>
+          {languageOptions.map((lang) => (
+            <TouchableOpacity
+              key={lang.code}
+              style={[
+                styles.optionRow,
+                {
+                  backgroundColor: language === lang.code
+                    ? roleColor + '22' : 'transparent',
+                  borderColor: language === lang.code
+                    ? roleColor : colors.border
+                }
+              ]}
+              onPress={() => changeLanguage(lang.code)}
+            >
+              <Text style={styles.optionEmoji}>{lang.emoji}</Text>
+              <Text style={[styles.optionLabel, { color: colors.text }]}>
+                {lang.label}
+              </Text>
+              {language === lang.code && (
+                <Text style={[styles.optionCheck, { color: roleColor }]}>✓</Text>
+              )}
+            </TouchableOpacity>
+          ))}
         </View>
       </View>
 
+      {/* Theme Settings */}
+      <View style={styles.section}>
+        <Text style={[styles.sectionTitle, { color: roleColor }]}>
+          🎨 {t('theme')}
+        </Text>
+        <View style={[styles.optionCard, { backgroundColor: colors.surface }]}>
+          {themeOptions.map((option) => (
+            <TouchableOpacity
+              key={option.id}
+              style={[
+                styles.optionRow,
+                {
+                  backgroundColor: themeMode === option.id
+                    ? roleColor + '22' : 'transparent',
+                  borderColor: themeMode === option.id
+                    ? roleColor : colors.border
+                }
+              ]}
+              onPress={() => setTheme(option.id)}
+            >
+              <Text style={styles.optionEmoji}>{option.emoji}</Text>
+              <Text style={[styles.optionLabel, { color: colors.text }]}>
+                {option.label}
+              </Text>
+              {themeMode === option.id && (
+                <Text style={[styles.optionCheck, { color: roleColor }]}>✓</Text>
+              )}
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
+
+      {/* About */}
+      <View style={styles.section}>
+        <Text style={[styles.sectionTitle, { color: roleColor }]}>
+          {t('about')}
+        </Text>
+        {[
+          { label: t('app_version'), value: 'RuralMate v2.0' },
+          { label: '🌐 Domain', value: 'algearithm.xyz' },
+          { label: t('built_for'), value: t('rural_india') },
+        ].map((item, i) => (
+          <View key={i} style={[styles.infoCard, {
+            backgroundColor: colors.surface,
+            borderColor: colors.border
+          }]}>
+            <Text style={[styles.infoLabel, { color: colors.textSecondary }]}>
+              {item.label}
+            </Text>
+            <Text style={[styles.infoValue, { color: colors.text }]}>
+              {item.value}
+            </Text>
+          </View>
+        ))}
+      </View>
+
+      {/* Logout */}
       <TouchableOpacity
-        style={[styles.logoutBtn, { backgroundColor: '#c62828' }]}
+        style={[styles.logoutBtn, { backgroundColor: colors.error }]}
         onPress={handleLogout}
       >
         <Text style={styles.logoutText}>🚪 {t('logout')}</Text>
@@ -185,7 +268,7 @@ const styles = StyleSheet.create({
   avatar: { fontSize: 70, marginBottom: 12 },
   name: { fontSize: 26, fontWeight: 'bold', color: 'white' },
   role: {
-    fontSize: 14, color: 'rgba(255,255,255,0.8)',
+    fontSize: 13, color: 'rgba(255,255,255,0.8)',
     marginTop: 4, letterSpacing: 2
   },
   villageBadge: {
@@ -193,26 +276,38 @@ const styles = StyleSheet.create({
     paddingVertical: 6, marginTop: 10
   },
   villageText: { color: 'white', fontSize: 14 },
-  section: { padding: 16, marginTop: 8 },
+  section: { padding: 16, marginTop: 4 },
   sectionTitle: {
-    fontSize: 16, fontWeight: 'bold',
-    marginBottom: 10, textTransform: 'uppercase', letterSpacing: 1
+    fontSize: 14, fontWeight: 'bold',
+    marginBottom: 10, textTransform: 'uppercase',
+    letterSpacing: 1
   },
   infoCard: {
-    backgroundColor: 'white', borderRadius: 12,
-    padding: 16, marginBottom: 10,
-    flexDirection: 'row', justifyContent: 'space-between',
-    alignItems: 'center', elevation: 2
+    borderRadius: 12, padding: 16,
+    marginBottom: 8, flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center', elevation: 1,
+    borderWidth: 1
   },
-  infoLabel: { fontSize: 15, color: '#666' },
+  infoLabel: { fontSize: 14 },
   infoValue: {
-    fontSize: 15, fontWeight: '600',
-    color: '#333', textAlign: 'right',
-    flex: 1, marginLeft: 8
+    fontSize: 14, fontWeight: '600',
+    textAlign: 'right', flex: 1, marginLeft: 8
   },
+  optionCard: {
+    borderRadius: 12, overflow: 'hidden',
+    elevation: 1
+  },
+  optionRow: {
+    flexDirection: 'row', alignItems: 'center',
+    padding: 14, borderWidth: 1, gap: 12
+  },
+  optionEmoji: { fontSize: 22 },
+  optionLabel: { flex: 1, fontSize: 15, fontWeight: '500' },
+  optionCheck: { fontSize: 18, fontWeight: 'bold' },
   logoutBtn: {
     margin: 16, borderRadius: 12,
-    padding: 18, alignItems: 'center', elevation: 3
+    padding: 18, alignItems: 'center', elevation: 2
   },
   logoutText: { color: 'white', fontSize: 18, fontWeight: 'bold' }
 });
